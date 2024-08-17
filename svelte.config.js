@@ -22,7 +22,8 @@ const config = {
 		},
 		serviceWorker: {
 			register: false
-		}
+		},
+		preprocess: vitePreprocess()
 	}
 };
 

@@ -19,7 +19,7 @@ fn main() {
   tauri::Builder::default()
     .menu(menu)
     .on_menu_event(|event| {
-      event.window().emit(("frontend_".to_owned() + event.menu_item_id().into()).as_str(), Payload {message: "none".to_owned()});
+      let _ = event.window().emit(("frontend_".to_owned() + event.menu_item_id().into()).as_str(), Payload {message: "none".to_owned()});
     })
     .invoke_handler(tauri::generate_handler![getfilepath])
     .run(tauri::generate_context!())
@@ -28,7 +28,7 @@ fn main() {
 #[tauri::command]
 fn getfilepath() -> String {
   //println!("yep");
-  let mut answer = FileDialog::new()
+  let answer = FileDialog::new()
     .add_filter("Demo file", &["dem"])
     .set_directory("/")
     .pick_file();

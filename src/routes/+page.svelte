@@ -7,6 +7,7 @@
     {#each $messages as message }
         <div>
             {message.getName()}
+            {message.getType()}
         </div>
     {/each}
 {/if}
