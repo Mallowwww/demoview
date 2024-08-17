@@ -10,3 +10,8 @@ To build the project, run:
 ```
 $ npm run tauri build
 ```
+# Roadmap
+To make this program work, we need it to be able to:
+- [ ] Read and display server messages in a human-readable format
+- [ ] Render the map of the demo in-app
+- [ ] Render entities in the map as the demo plays
