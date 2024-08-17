@@ -11,7 +11,11 @@ struct Payload {
 }
 fn main() {
   let menu = Menu::new()
-    .add_submenu(Submenu::new("File", Menu::new().add_item(CustomMenuItem::new("open", "Open"))));
+    .add_submenu(Submenu::new("File", Menu::new().add_item(CustomMenuItem::new("open", "Open"))))
+    .add_item(CustomMenuItem::new("edit", "Edit"))
+    .add_item(CustomMenuItem::new("tools", "Tools"))
+    .add_item(CustomMenuItem::new("view", "View"))
+    .add_item(CustomMenuItem::new("help", "Help"));
   tauri::Builder::default()
     .menu(menu)
     .on_menu_event(|event| {
