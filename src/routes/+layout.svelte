@@ -1,7 +1,7 @@
 <script lang="ts">
     export const prerender = true
     export const ssr = false
-    import { fileLoaded, filePath, messages } from "$lib/filestore"
+    import { fileLoaded, filePath, demo } from "$lib/filestore"
     import "../app.css"
     import { invoke } from '@tauri-apps/api/tauri'
     import { onMount } from "svelte";
@@ -22,11 +22,10 @@
         })
         
         taurifs.readBinaryFile($filePath).then((value) => {
-            const demo = SourceDemoParser.default()
+            const newdemo = SourceDemoParser.default()
                 .setOptions({ userCmds: true })
                 .parse(value.buffer)
-                .findMessages((message) => {return true})
-            $messages = demo
+            $demo = newdemo
         })
         
         
