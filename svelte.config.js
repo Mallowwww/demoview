@@ -22,6 +22,9 @@ const config = {
 		},
 		serviceWorker: {
 			register: false
+		},
+		alias: {
+			"@/*": "$lib"
 		}
 	}
 };
