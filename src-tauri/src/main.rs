@@ -3,7 +3,7 @@
 
 use tauri::{Menu, CustomMenuItem, Submenu};
 use rfd::FileDialog;
-
+use anyhow::Result;
 
 #[derive(Clone, serde::Serialize)]
 struct Payload {
@@ -11,7 +11,9 @@ struct Payload {
 }
 fn main() {
   let menu = Menu::new()
-    .add_submenu(Submenu::new("File", Menu::new().add_item(CustomMenuItem::new("open", "Open"))))
+    .add_submenu(Submenu::new("File", Menu::new()
+      .add_item(CustomMenuItem::new("open", "Open Gameinfo")))
+    )
     .add_item(CustomMenuItem::new("edit", "Edit"))
     .add_item(CustomMenuItem::new("tools", "Tools"))
     .add_item(CustomMenuItem::new("view", "View"))
@@ -28,10 +30,14 @@ fn main() {
 #[tauri::command]
 fn getfilepath() -> String {
   //println!("yep");
+  
   let answer = FileDialog::new()
-    .add_filter("Demo file", &["dem"])
+    .add_filter("Gameinfo", &["txt"])
     .set_directory("/")
     .pick_file();
-  return answer.expect("nope").as_path().to_string_lossy().into();
-  
+  let out = match(&answer) {
+    Some(a) => a.as_path().to_str().expect("FU"),
+    None => "nope"
+  } ;
+  return String::from(out);
 }

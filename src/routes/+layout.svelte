@@ -1,7 +1,7 @@
 <script lang="ts">
     export const prerender = true
     export const ssr = false
-    import { fileLoaded, filePath, demo } from "$lib/filestore"
+    import { fileLoaded, filePath, demo, gameinfoDir, gameinfoLoaded } from "$lib/filestore"
     import "../app.css"
     import { invoke } from '@tauri-apps/api/tauri'
     import { onMount } from "svelte";
@@ -13,29 +13,19 @@
     async function getfilepath() {
         await invoke<string>('getfilepath').then((message) => {
             if (message != "nope") {
-                $fileLoaded = true
-                $filePath = message
+                $gameinfoLoaded = true
+                $gameinfoDir = message.substring(0, message.lastIndexOf('/'))
+                console.log($gameinfoDir)
             } else {
-                $fileLoaded = false
-                $filePath = ''
+                $gameinfoLoaded = false
+                $gameinfoDir = ''
             }
-        })
-        
-        taurifs.readBinaryFile($filePath).then((value) => {
-            const newdemo = SourceDemoParser.default()
-                .setOptions({ userCmds: true })
-                .parse(value.buffer)
-            $demo = newdemo
-        })
-        
-        
-            
+        })  
     }
     onMount(async () => {
-        listen('frontend_open', (event) => {
-            getfilepath()
-        })
+        listen('frontend_open', getfilepath)
         $fileLoaded = false
+        $gameinfoLoaded = false
     })
     
 </script>

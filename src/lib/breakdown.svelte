@@ -34,14 +34,15 @@
             }
         )})
         $taggedMessages = $taggedMessages
-        $allowedMessages = $taggedMessages.filter((message) => {if ($selectedTags.length == 0) return true;$selectedTags.forEach((tag) => {
-            if (contains($selectedTags, tag)) return true;
-        });return false})
-        console.log($taggedMessages)
+        reloadAllowed()
     })
     
     let contains = (arr: string[], target: string) => arr.indexOf(target) >= 0;
-    
+    let reloadAllowed = () => {
+        $allowedMessages = $taggedMessages.filter((message) => {if ($selectedTags.length == 0) return true;return $selectedTags.every((tag) => {
+            if (contains(message.tags, tag)) return true;
+        })})
+    }
     
 </script>
 <div class="{classs} flex flex-col" style="scrollbar-width: none;">
@@ -57,15 +58,15 @@
             <div class="">
                 {i}
             </div>
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
             {#each message.tags as tag}
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <div on:click={() => {
                     if ($selectedTags.indexOf(tag)>=0) 
                         $selectedTags=$selectedTags.filter((e) => e != tag) 
                     else
                         $selectedTags=$selectedTags.concat(tag)
-                        $allowedMessages = $taggedMessages.filter((message) => {if ($selectedTags.length == 0) return true;return $selectedTags.every((tag) => {
-                            if (contains(message.tags, tag)) return true;
-                        })})
+                    reloadAllowed()
                     console.log($allowedMessages)
                 }}>
                     <Badge class="my-auto p-1 ml-1 text-[8pt] ">{tag}</Badge>
