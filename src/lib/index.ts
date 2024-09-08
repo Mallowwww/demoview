@@ -2,4 +2,8 @@
 
 import { Separator } from "./components/ui/separator";
 import { Badge } from "./components/ui/badge";
-export { Separator, Badge }
+import Viewport from "./viewport.svelte";
+import Controls from "./controls.svelte";
+import Breakdown from "./breakdown.svelte";
+import Modal from "./modal.svelte"; 
+export { Separator, Badge, Viewport, Controls, Breakdown, Modal }

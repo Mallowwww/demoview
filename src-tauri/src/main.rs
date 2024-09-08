@@ -4,6 +4,8 @@
 use tauri::{Menu, CustomMenuItem, Submenu};
 use rfd::FileDialog;
 use anyhow::Result;
+use std::fs::{self, ReadDir};
+use std::path::Path;
 
 #[derive(Clone, serde::Serialize)]
 struct Payload {
@@ -23,13 +25,13 @@ fn main() {
     .on_menu_event(|event| {
       let _ = event.window().emit(("frontend_".to_owned() + event.menu_item_id().into()).as_str(), Payload {message: "none".to_owned()});
     })
-    .invoke_handler(tauri::generate_handler![getfilepath])
+    .invoke_handler(tauri::generate_handler![getfilepath, getfilesinpath])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 }
 #[tauri::command]
 fn getfilepath() -> String {
-  //println!("yep");
+  println!("yep");
   
   let answer = FileDialog::new()
     .add_filter("Gameinfo", &["txt"])
@@ -40,4 +42,19 @@ fn getfilepath() -> String {
     None => "nope"
   } ;
   return String::from(out);
+}
+#[tauri::command]
+fn getfilesinpath(path: String) -> String {
+  println!("{}", path);
+  if !Path::new(&path).exists() {
+    return String::from("nope");
+  }
+  let paths = fs::read_dir(path).unwrap();
+  
+  let mut out = String::from("");
+  for path in paths {
+    out += &(path.unwrap().path().display().to_string() + &String::from(","));
+  }
+  println!("{}",out);
+  return out;
 }
