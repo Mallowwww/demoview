@@ -7,11 +7,11 @@
     import { AspectRatio } from "$lib/components/ui/aspect-ratio/index.js";
     import { MeshBasicMaterial } from 'three';
 </script>
-<div class="h-[100%] bg-black mx-auto"
+<div class="h-[100%] bg-black e border-2 mx-auto"
     style="aspect-ratio: {ratio};">
     
         <Canvas>
-            <Text text="AAAA" fontSize=1/>
+            <Text text="Threlte is working" fontSize=1 anchorX={4.1} anchorY={-.5}/>
         </Canvas>
     
 </div>

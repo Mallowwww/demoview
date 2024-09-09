@@ -3,7 +3,6 @@
 
 use tauri::{Menu, CustomMenuItem, Submenu};
 use rfd::FileDialog;
-use anyhow::Result;
 use std::fs::{self, ReadDir};
 use std::path::Path;
 
@@ -37,7 +36,7 @@ fn getfilepath() -> String {
     .add_filter("Gameinfo", &["txt"])
     .set_directory("/")
     .pick_file();
-  let out = match(&answer) {
+  let out = match &answer {
     Some(a) => a.as_path().to_str().expect("FU"),
     None => "nope"
   } ;

@@ -48,7 +48,7 @@
     
 </script>
 
-<slot />
+<slot class="overflow-hidden"/>
 <div class="static">
     <Toaster />
 </div>

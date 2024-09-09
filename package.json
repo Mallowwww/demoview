@@ -48,6 +48,7 @@
 		"pnpm": "^9.7.1",
 		"svelte-modals": "^1.3.0",
 		"svelte-sonner": "^0.3.27",
+		"svrollbar": "^0.12.0",
 		"tailwind-merge": "^2.5.2",
 		"tailwind-variants": "^0.2.1",
 		"tailwindcss-animate": "^1.0.7",
