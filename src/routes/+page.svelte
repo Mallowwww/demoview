@@ -1,9 +1,17 @@
 <script lang="ts">
-    import { fileLoaded, filePath, demo, availableDemos, pickDemo } from '$lib/filestore'
+    import { fileLoaded, filePath, demo, availableDemos, pickDemo, gameinfoDir, maxTick} from '$lib/filestore'
     import { DemoMessages, SourceDemoParser, type Messages } from '@nekz/sdp'
-    import { Breakdown, Viewport, Controls, Modal } from '$lib'
-    let frame = 0
+    import { Breakdown, Viewport, Controls, Modal, type DemoMessage } from '$lib'
+    import { writable } from 'svelte/store';
+    import { onMount } from 'svelte';
+    let messages = writable<DemoMessage[]>([])
+    let frame = writable<number[]>([0])
     let selectedMessage: string = ''
+    onMount(() => {
+
+        $maxTick = 30
+        
+    })
 </script>
 <div class="flex w-[100vw] h-[100vh] bg-background dark">
     <div class="flex flex-col w-[50%] h-[100%] border-r-2">
@@ -17,10 +25,10 @@
     <div class="flex flex-col w-[50%] h-[100%] border-l-2">
         <div class="flex flex-col w-[100%] h-[50%] border-b-2">
             <div class="h-[80%] mt-2">
-                <Viewport ratio={"16/9"} bind:frame/>
+                <Viewport ratio={"16/9"} bind:frame={$frame[0]}/>
             </div>
             <div class="h-[20%]">
-                <Controls />
+                <Controls bind:value={$frame} bind:maxTick={$maxTick}/>
             </div>
             
         </div>
@@ -34,5 +42,5 @@
     type="choose" 
     bind:options={$availableDemos} 
     text=""
-    thenOption={(result) => {$demo = result}}
+    thenOption={(result) => {$demo = result; $fileLoaded = true; $filePath = $gameinfoDir + "\\" + result}}
 />

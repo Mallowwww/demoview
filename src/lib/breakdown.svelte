@@ -4,8 +4,8 @@
     import { onMount } from "svelte";
     import { writable } from "svelte/store";
     export let selectedMessage: string = ''
-    export let messages = writable<DemoMessage[]>([
-    ])
+    export let messages = writable<DemoMessage[]>([])
+    
     onMount(() => {
         for (let i = 0; i < 20; i++) {
             $messages.push({
