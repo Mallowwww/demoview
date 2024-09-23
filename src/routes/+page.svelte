@@ -1,6 +1,6 @@
 <script lang="ts">
     import { fileLoaded, filePath, demo, availableDemos, pickDemo, gameinfoDir, maxTick, demoBytes} from '$lib/filestore'
-    import { Breakdown, Viewport, Controls, Modal, type DemoMessage, makeFakeMessages, Hex } from '$lib'
+    import { Breakdown, Viewport, Controls, Modal, type DemoMessage, makeFakeMessages, Hex, Info } from '$lib'
     import { writable } from 'svelte/store';
     import { onMount } from 'svelte';
     import { invoke } from '@tauri-apps/api/tauri'
@@ -33,7 +33,7 @@
             <Breakdown bind:selectedMessage bind:messages />
         </div>
         <div class="flex w-[100%] h-[50%] border-t-2">
-            a
+            <Info />
         </div>
     </div>
     <div class="flex flex-col w-[50%] h-[100%] border-l-2">

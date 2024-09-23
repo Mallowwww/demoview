@@ -37,15 +37,15 @@
     }
     
 </script>
-<div class="overflow-y-scroll w-[100%] h-[100%] text-white font-mono text-sm flex select-none" style="white-space: pre;">
+<div class="font-bold overflow-y-scroll w-[100%] h-[100%] text-white font-mono text-sm flex select-none" style="white-space: pre;">
     <div class="ml-auto mt-1">
         {#each $lines as line}
-            <div>{line}</div>
+            <div class="even:bg-foreground even:bg-opacity-20 even:font-bold">{line}</div>
         {/each}
     </div>
     <div class="flex flex-col overflow-x-clip ml-2 mr-auto mt-1">
         {#each $strings as line}
-            <div>{line}</div>
+            <div class="even:bg-foreground even:bg-opacity-20 even:font-bold">{line}</div>
         {/each}
     </div>
     
