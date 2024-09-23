@@ -24,13 +24,12 @@ fn main() {
     .on_menu_event(|event| {
       let _ = event.window().emit(("frontend_".to_owned() + event.menu_item_id().into()).as_str(), Payload {message: "none".to_owned()});
     })
-    .invoke_handler(tauri::generate_handler![getfilepath, getfilesinpath])
+    .invoke_handler(tauri::generate_handler![getfilepath, getfilesinpath, getbytesfromfile])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 }
 #[tauri::command]
 fn getfilepath() -> String {
-  println!("yep");
   
   let answer = FileDialog::new()
     .add_filter("Gameinfo", &["txt"])
@@ -56,4 +55,15 @@ fn getfilesinpath(path: String) -> String {
   }
   println!("{}",out);
   return out;
+}
+#[tauri::command]
+fn getbytesfromfile(path: String) -> Vec<u8> {
+  if !Path::new(&path).exists() {
+    println!("{}", &path);
+    return Vec::new();
+  }
+  let bytes = fs::read(path);
+  let result = bytes.ok().unwrap();
+  println!("{}", String::from_utf8_lossy(&result));
+  return result
 }

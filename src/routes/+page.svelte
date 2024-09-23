@@ -1,18 +1,27 @@
 <script lang="ts">
-    import { fileLoaded, filePath, demo, availableDemos, pickDemo, gameinfoDir, maxTick} from '$lib/filestore'
-    import { DemoMessages, SourceDemoParser, type Messages } from '@nekz/sdp'
+    import { fileLoaded, filePath, demo, availableDemos, pickDemo, gameinfoDir, maxTick, demoBytes} from '$lib/filestore'
     import { Breakdown, Viewport, Controls, Modal, type DemoMessage, makeFakeMessages, Hex } from '$lib'
     import { writable } from 'svelte/store';
     import { onMount } from 'svelte';
+    import { invoke } from '@tauri-apps/api/tauri'
     let messages = writable<DemoMessage[]>([])
     let frame = writable<number[]>([0])
     let selectedMessage: string = ''
     let devText: string = 'No demo loaded'
-    demo.subscribe(() => {
+    let bytes = writable<Uint8Array>(new Uint8Array([]))
+    demo.subscribe((value) => {
         if ($demo.length > 0) {
-            devText = $demo
+            devText = value
             $messages = makeFakeMessages(30)
+            invoke('getbytesfromfile', { path: $filePath }).then((value) => {
+                $demoBytes = new Uint8Array(value as [])
+            })
+            
         }
+        
+    })
+    demoBytes.subscribe((value) => {
+        $bytes = value
     })
     onMount(() => {
 
@@ -38,7 +47,7 @@
             
         </div>
         <div class="flex w-[100%] h-[50%] border-t-2">
-            <Hex />
+            <Hex bind:bytes/>
         </div>
     </div>
 </div>
@@ -47,5 +56,5 @@
     type="choose" 
     bind:options={$availableDemos} 
     text=""
-    thenOption={(result) => {$demo = result; $fileLoaded = true; $filePath = $gameinfoDir + "\\" + result}}
+    thenOption={(result) => {$filePath = $gameinfoDir + "\\demos\\" + result;$demo = result; $fileLoaded = true}}
 />
