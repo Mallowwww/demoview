@@ -3,25 +3,26 @@
     import { ScrollArea, ScrollAreaScrollbar, Scrollbar } from '$lib/components/ui/scroll-area'
     import { onMount } from "svelte";
     import { writable } from "svelte/store";
+    import { cn } from "./utils";
     export let selectedMessage: string = ''
     export let messages = writable<DemoMessage[]>([])
     
     onMount(() => {
-        for (let i = 0; i < 20; i++) {
-            $messages.push({
-                id: i + "-",
-                tick: i,
-                content: {},
-                type: ""
-            })
-            
-        }
         $messages = $messages
     })
 </script>
 <ScrollArea type="always" class="h-[100%] w-[100%] ">
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     {#each $messages as message (message.id)}
-        <div class="dark:text-white pl-1 text-sm py-[.10rem] bg-foreground bg-opacity-20 odd:bg-opacity-50">{message.tick}</div>
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <div 
+            on:click={() => {selectedMessage = message.id}}
+            class={
+                cn("dark:text-white pl-1 text-sm py-[.10rem] bg-foreground bg-opacity-20 odd:bg-opacity-50 transition-all hover:bg-opacity-0", 
+                    message.id == selectedMessage ? "bg-primary  odd:bg-opacity-80 bg-opacity-80" : ''
+                )
+            } style="transition-duration: 80ms;"
+            >{message.tick}</div>
     {/each}
     <Scrollbar orientation="vertical"/>
 </ScrollArea>

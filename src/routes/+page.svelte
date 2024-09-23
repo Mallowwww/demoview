@@ -1,22 +1,27 @@
 <script lang="ts">
     import { fileLoaded, filePath, demo, availableDemos, pickDemo, gameinfoDir, maxTick} from '$lib/filestore'
     import { DemoMessages, SourceDemoParser, type Messages } from '@nekz/sdp'
-    import { Breakdown, Viewport, Controls, Modal, type DemoMessage } from '$lib'
+    import { Breakdown, Viewport, Controls, Modal, type DemoMessage, makeFakeMessages, Hex } from '$lib'
     import { writable } from 'svelte/store';
     import { onMount } from 'svelte';
     let messages = writable<DemoMessage[]>([])
     let frame = writable<number[]>([0])
     let selectedMessage: string = ''
+    let devText: string = 'No demo loaded'
+    demo.subscribe(() => {
+        if ($demo.length > 0) {
+            devText = $demo
+            $messages = makeFakeMessages(30)
+        }
+    })
     onMount(() => {
 
-        $maxTick = 30
-        
     })
 </script>
 <div class="flex w-[100vw] h-[100vh] bg-background dark">
     <div class="flex flex-col w-[50%] h-[100%] border-r-2">
         <div class="flex w-[100%] h-[50%] border-b-2">
-            <Breakdown bind:selectedMessage />
+            <Breakdown bind:selectedMessage bind:messages />
         </div>
         <div class="flex w-[100%] h-[50%] border-t-2">
             a
@@ -25,7 +30,7 @@
     <div class="flex flex-col w-[50%] h-[100%] border-l-2">
         <div class="flex flex-col w-[100%] h-[50%] border-b-2">
             <div class="h-[80%] mt-2">
-                <Viewport ratio={"16/9"} bind:frame={$frame[0]}/>
+                <Viewport ratio={"16/9"} bind:frame={$frame[0]} bind:devText/>
             </div>
             <div class="h-[20%]">
                 <Controls bind:value={$frame} bind:maxTick={$maxTick}/>
@@ -33,7 +38,7 @@
             
         </div>
         <div class="flex w-[100%] h-[50%] border-t-2">
-            a
+            <Hex />
         </div>
     </div>
 </div>

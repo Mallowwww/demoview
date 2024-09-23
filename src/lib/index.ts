@@ -6,5 +6,6 @@ import Viewport from "./viewport.svelte";
 import Controls from "./controls.svelte";
 import Breakdown from "./breakdown.svelte";
 import Modal from "./modal.svelte"; 
-import { type DemoMessage } from "./demo"
-export { Separator, Badge, Viewport, Controls, Breakdown, Modal, type DemoMessage }
+import Hex from './hex.svelte'
+import { type DemoMessage, makeFakeMessages } from "./demo"
+export { Separator, Badge, Viewport, Controls, Breakdown, Modal, type DemoMessage, makeFakeMessages, Hex }
