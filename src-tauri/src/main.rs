@@ -3,7 +3,7 @@
 
 use tauri::{Menu, CustomMenuItem, Submenu};
 use rfd::FileDialog;
-use std::fs::{self, ReadDir};
+use std::fs::{self};
 use std::path::Path;
 
 #[derive(Clone, serde::Serialize)]
