@@ -1,6 +1,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { writable, type Writable } from "svelte/store";
+    import { ScrollArea, ScrollAreaScrollbar, Scrollbar } from '$lib/components/ui/scroll-area'
 
     export let bytes: Writable<Uint8Array>
     let lines = writable<string[]>([])
@@ -37,16 +38,17 @@
     }
     
 </script>
-<div class="font-bold overflow-y-scroll w-[100%] h-[100%] text-white font-mono text-sm flex select-none" style="white-space: pre;">
-    <div class="ml-auto mt-1">
-        {#each $lines as line}
-            <div class="even:bg-foreground even:bg-opacity-20 even:font-bold">{line}</div>
-        {/each}
+<ScrollArea class="font-bold w-[100%] h-[100%] text-white font-mono text-sm select-none" type="always">
+    <div class="flex whitespace-pre">
+        <div class="ml-auto mt-1">
+            {#each $lines as line}
+                <div class="even:bg-foreground even:bg-opacity-20 even:font-bold">{line}</div>
+            {/each}
+        </div>
+        <div class="flex flex-col overflow-x-clip ml-2 mr-auto mt-1">
+            {#each $strings as line}
+                <div class="even:bg-foreground even:bg-opacity-20 even:font-bold">{line}</div>
+            {/each}
+        </div>
     </div>
-    <div class="flex flex-col overflow-x-clip ml-2 mr-auto mt-1">
-        {#each $strings as line}
-            <div class="even:bg-foreground even:bg-opacity-20 even:font-bold">{line}</div>
-        {/each}
-    </div>
-    
-</div>
+</ScrollArea>
