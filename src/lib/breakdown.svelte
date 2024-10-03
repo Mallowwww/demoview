@@ -19,9 +19,9 @@
             on:click={() => {selectedMessage = message.id}}
             class={
                 cn("dark:text-white pl-1 text-sm py-[.10rem] bg-foreground bg-opacity-20 odd:bg-opacity-50 transition-all hover:bg-opacity-0", 
-                    message.id == selectedMessage ? "bg-primary  odd:bg-opacity-80 bg-opacity-80" : ''
+                    message.id == selectedMessage ? "bg-primary  odd:bg-opacity-80 bg-opacity-80 hover:bg-opacity-100" : ''
                 )
-            } style="transition-duration: 80ms;"
+            } 
             >{message.tick}</div>
     {/each}
     <Scrollbar orientation="vertical"/>
