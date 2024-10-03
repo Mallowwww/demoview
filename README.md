@@ -1,7 +1,14 @@
 # Overview
 We're trying to create an easier way to view demo files from Source 1 games like TF2 and HL2. This project is nowhere near usable. 
 # Build
-This project uses Sveltekit for the frontend and Rust for the backend with Tauri. To run the app locally, enter the following commands:
+This project uses Sveltekit for the frontend and Rust for the backend with Tauri. 
+## Prerequisites
+In order to build Demoview, you will need to install the Visual Studio C++ build tools from the Visual Studio installer; you will also need to install Rust. On Windows 11, the easiest way to do this is to run this command:
+```ps
+winget install --id Rustlang.Rustup
+```
+## Steps
+To run the app locally, enter the following commands:
 ```
 $ npm i
 $ npm run tauri dev
