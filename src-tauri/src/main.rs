@@ -1,10 +1,11 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
-
+mod parsing;
 use tauri::{Menu, CustomMenuItem, Submenu};
 use rfd::FileDialog;
 use std::fs::{self};
 use std::path::Path;
+
 
 #[derive(Clone, serde::Serialize)]
 struct Payload {
@@ -21,6 +22,7 @@ fn main() {
     .add_item(CustomMenuItem::new("help", "Help"));
   tauri::Builder::default()
     .menu(menu)
+    .plugin(parsing::init())
     .on_menu_event(|event| {
       let _ = event.window().emit(("frontend_".to_owned() + event.menu_item_id().into()).as_str(), Payload {message: "none".to_owned()});
     })

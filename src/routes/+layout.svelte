@@ -44,6 +44,9 @@
         listen('frontend_open', getfilepath)
         $fileLoaded = false
         $gameinfoLoaded = false
+        invoke("plugin:parsing|test").then((value) => {
+            console.log(value)
+        })
     })
     
 </script>

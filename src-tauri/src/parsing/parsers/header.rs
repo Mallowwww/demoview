@@ -3,8 +3,8 @@ use std::io::{Error, ErrorKind, Read, BufReader};
 use std::fs::File;
 use std::collections::VecDeque;
 
-use crate::utils::*;
-use crate::parsers::common::Parser;
+use crate::parsing::utils::*;
+use crate::parsing::parsers::common::Parser;
 
 /// The universal header for Source's `.dem` files.
 /// Note that the file stamp is not included, because any valid demo header always has "HL2DEMO\x00" as a file stamp.
