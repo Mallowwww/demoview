@@ -14,7 +14,10 @@
             devText = value
             $messages = makeFakeMessages(30)
             invoke('getbytesfromfile', { path: $filePath }).then((value) => {
-                $demoBytes = new Uint8Array(value as [])
+                $demoBytes = new Uint8Array(value as []);
+                invoke('plugin:parsing|parse_header', { path: $filePath }).then((value) => {
+                    console.log(value);
+                })
             })
             
         }

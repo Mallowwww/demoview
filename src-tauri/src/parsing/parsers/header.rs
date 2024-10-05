@@ -3,6 +3,8 @@ use std::io::{Error, ErrorKind, Read, BufReader};
 use std::fs::File;
 use std::collections::VecDeque;
 
+use serde::ser::{Serialize, SerializeStruct, Serializer};
+
 use crate::parsing::utils::*;
 use crate::parsing::parsers::common::Parser;
 
@@ -63,5 +65,23 @@ impl Parser for DemoHeader {
 
     fn read_size(_: &mut BufReader<File>) -> Result<usize, Error> {
         Ok(1072)
+    }
+}
+impl Serialize for DemoHeader {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut s = serializer.serialize_struct("DemoHeader", 10)?;
+        s.serialize_field("demo_protocol", &self.demo_protocol)?;
+        s.serialize_field("net_protocol", &self.net_protocol)?;
+        s.serialize_field("server_name", &self.server_name)?;
+        s.serialize_field("client_name", &self.client_name)?;
+        s.serialize_field("game_dir", &self.game_dir)?;
+        s.serialize_field("playback_time", &self.playback_time)?;
+        s.serialize_field("tick_count", &self.tick_count)?;
+        s.serialize_field("frame_count", &self.frame_count)?;
+        s.serialize_field("signon_length", &self.signon_length)?;
+        s.end()
     }
 }

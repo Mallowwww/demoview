@@ -10,8 +10,6 @@
     import { Toaster } from "$lib/components/ui/sonner";
     import * as taurifs from '@tauri-apps/api/fs'
     import * as AlertDialog from "$lib/components/ui/alert-dialog";
-    import fs from 'fs'
-    import { DemoMessages, SourceDemoParser, type Messages } from '@nekz/sdp'
     
     async function getfilepath() {
         await invoke<string>('getfilepath').then(async (message) => {
